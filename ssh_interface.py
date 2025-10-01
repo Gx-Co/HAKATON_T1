@@ -1,4 +1,22 @@
+
+# Название команды: ЧВК Сырочек
+# Логин:  team06
+# Пароль: #@~79j0gb2$a
+# Внутернний ip: 10.0.1.106
+# Внешний ip: 203.81.208.25
+# ssh: 22006
+# rdp: 33006
+# http://dvwa.local/
+
+
 import paramiko
+
+def startShh():
+    pass
+
+def login():
+    pass
+
 
 hostname = '203.81.208.25'
 port = 22006
@@ -23,17 +41,11 @@ client.connect(hostname, port, username, password)
 
 def sshRequest(request):
     stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local")
+    
     response = stdout.read().decode()
     print(response)
     return response
 
 
 
-# Название команды: ЧВК Сырочек
-# Логин:  team06
-# Пароль: #@~79j0gb2$a
-# Внутернний ip: 10.0.1.106
-# Внешний ip: 203.81.208.25
-# ssh: 22006
-# rdp: 33006
-# http://dvwa.local/
+
