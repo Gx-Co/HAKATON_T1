@@ -21,10 +21,13 @@ client.connect(hostname, port, username, password)
 
 # curl -i -X POST -H --header 'Content-Type: text/html; charset=UTF-8' -d '{"username": "' OR 1=1--", "password": "' OR 1=1--"}' http://dvwa.local
 
-stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local")
-print(stdout.read().decode())
+def sshRequest(request):
+    stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local")
+    response = stdout.read().decode()
+    print(response)
+    return response
 
-client.close()
+
 
 # Название команды: ЧВК Сырочек
 # Логин:  team06
